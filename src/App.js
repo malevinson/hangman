@@ -55,12 +55,14 @@ function App() {
   const renderGameSummary = () => (
     <Fragment>
       {!remainingGuesses ? (
-        <div>
+        <p>
           Sorry, you lost! The word was
-          <WordToGuess>{` ${wordToGuess.join("").toUpperCase()}`}</WordToGuess>
-        </div>
+          <WordToGuess>{` ${wordToGuess.join("").toUpperCase()}`}</WordToGuess>.
+          <br/>
+          Check your console if you need help 😉 
+        </p>
       ) : (
-        <div>You win!</div>
+        <p>You win! 🎉</p>
       )}
     </Fragment>
   );
@@ -96,6 +98,9 @@ function App() {
 
   const isGameOver =
     !remainingGuesses || !displayWord.includes(NOT_GUESSED_CHAR);
+
+  console.log(wordToGuess.join(''));
+  console.log({ displayWord, remainingGuesses, guessedChars })
 
   return (
     <Main>
