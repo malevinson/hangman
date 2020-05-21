@@ -4,11 +4,10 @@ import { NOT_GUESSED_CHAR } from "./constants";
 export const getRandomWord = () =>
   wordList[Math.floor(Math.random() * wordList.length)].split("");
 
-export const getUpdatedDisplayWord = ({
-  displayWord,
-  char,
-  wordToGuess,
-}) =>
+export const getDisplayWord = (wordToGuess) =>
+  wordToGuess.map(() => NOT_GUESSED_CHAR);
+
+export const getUpdatedDisplayWord = ({ displayWord, char, wordToGuess }) =>
   displayWord.map((displayChar, i) => {
     if (displayChar !== NOT_GUESSED_CHAR) return displayChar;
     if (wordToGuess[i] === char.toLowerCase()) return char;

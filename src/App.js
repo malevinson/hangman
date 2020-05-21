@@ -7,7 +7,7 @@ import {
   ALPHABET_LENGTH,
 } from "./constants";
 import Hangman from "./Hangman";
-import { getRandomWord, getUpdatedDisplayWord } from "./utils";
+import { getRandomWord, getUpdatedDisplayWord, getDisplayWord } from "./utils";
 import {
   Main,
   CharClickable,
@@ -25,16 +25,13 @@ function App() {
     NUM_OF_WRONG_GUESSES
   );
   const [wordToGuess, setWordToGuess] = useState(() => getRandomWord());
-  const [displayWord, setDisplayWord] = useState(
-    wordToGuess.map(() => NOT_GUESSED_CHAR)
-  );
+  const [displayWord, setDisplayWord] = useState(getDisplayWord(wordToGuess));
 
   useEffect(() => {
-    setDisplayWord(wordToGuess.map(() => NOT_GUESSED_CHAR));
+    setDisplayWord(getDisplayWord(wordToGuess));
     setGuessedChars([]);
     setRemainingGuesses(NUM_OF_WRONG_GUESSES);
   }, [wordToGuess]);
-
 
   const handleClickChar = (char) => {
     if (guessedChars.includes(char)) return;
@@ -42,9 +39,7 @@ function App() {
     setGuessedChars((prevState) => [...prevState, char]);
 
     if (wordToGuess.includes(char.toLowerCase())) {
-      setDisplayWord(
-        getUpdatedDisplayWord({ displayWord, char, wordToGuess })
-      );
+      setDisplayWord(getUpdatedDisplayWord({ displayWord, char, wordToGuess }));
     } else {
       setRemainingGuesses(remainingGuesses - 1);
     }
@@ -58,11 +53,19 @@ function App() {
         <p>
           Sorry, you lost! The word was
           <WordToGuess>{` ${wordToGuess.join("").toUpperCase()}`}</WordToGuess>.
-          <br/>
-          Check your console if you need help 😉 
+          <br />
+          Check your console if you need help{" "}
+          <span role="img" aria-label="wink">
+            😉
+          </span>
         </p>
       ) : (
-        <p>You win! 🎉</p>
+        <p>
+          You win!{" "}
+          <span role="img" aria-label="celebration">
+            🎉
+          </span>
+        </p>
       )}
     </Fragment>
   );
@@ -81,7 +84,7 @@ function App() {
   const renderCharEntry = () => (
     <CharWrapper>
       {times(ALPHABET_LENGTH, (i) => {
-        let char = String.fromCharCode(STARTING_CHAR + i);
+        const char = String.fromCharCode(STARTING_CHAR + i);
 
         return (
           <CharClickable
@@ -99,8 +102,8 @@ function App() {
   const isGameOver =
     !remainingGuesses || !displayWord.includes(NOT_GUESSED_CHAR);
 
-  console.log(wordToGuess.join(''));
-  console.log({ displayWord, remainingGuesses, guessedChars })
+  console.log(wordToGuess.join(""));
+  console.log({ displayWord, remainingGuesses, guessedChars });
 
   return (
     <Main>
@@ -124,4 +127,3 @@ function App() {
 }
 
 export default App;
-

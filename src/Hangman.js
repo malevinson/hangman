@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import styled, { css } from "styled-components";
 
+// in large project ideally would pull these properties from shared styles as constants
 const defaultStyles = css`
   stroke-width: 6;
   fill: none;
@@ -17,11 +18,11 @@ const hangmanSupportStyles = css`
 `;
 
 const Base = styled.polyline`
-  ${hangmanSupportStyles}
+  ${hangmanSupportStyles};
 `;
 
 const Body = styled.polyline`
-  ${hangmanStyles}
+  ${hangmanStyles};
 `;
 
 const Eye = styled.polyline`
@@ -48,6 +49,7 @@ export default function Hangman({ remainingGuesses }) {
           )}
         </Fragment>
       )}
+
       {remainingGuesses < 5 && <Body points="150 110, 150 125" />}
       {remainingGuesses < 4 && <Body points="125 125, 175 125" />}
       {remainingGuesses < 3 && <Body points="150 125, 150 175" />}
